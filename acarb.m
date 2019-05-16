@@ -13,9 +13,11 @@ ylabel('CO2');
 Fs = 1;
 N = length(y);
 Y = fft(y);
-Y(1) = [];
-f = (1:floor(N/2))*Fs/N;
-pow = (2*abs(Y(1:floor(N/2))/N)).^2;
+%Y1 = Y;
+%Y1(1) = [];
+f = (2:floor(N/2))*Fs/N; %segnale reale, per simmetria si opera con le frequenze da 1 a N/2
+%pow = (2*abs(Y1(1:floor(N/2))/N)).^2;
+pow = (2*abs(Y(2:floor(N/2))/N)).^2;
 
 %Periodogramma
 figure('Name','Periodogramma');
@@ -26,8 +28,15 @@ ylabel('Potenza');
 sorted_pow = sort(pow,'descend');
 maxpow = sorted_pow(1); %calcolo della massima potenza
 maxpow2 = sorted_pow(2); %calcolo della seconda potenza maggiore
+maxpow3 = sorted_pow(3);
+maxpow4 = sorted_pow(4);
 f(pow == maxpow) %frequenza alla quale la potenza è massima
 f(pow == maxpow2) %frequenza corrispondente alla seconda potenza maggiore
+
+ind1 = find(Y==Y(pow==maxpow));
+ind2 = find(Y==Y(pow==maxpow2));
+ind3 = find(Y==Y(pow==maxpow3));
+ind4 = find(Y==Y(pow==maxpow4));
 
 %si visualizza la potenza in funzione del periodo
 figure('Name','Periodogramma');
@@ -39,3 +48,26 @@ ylabel('Potenza');
 maxper = p(pow == maxpow); %periodo in cui il fenomeno raggiunge la massima potenza:
 maxper2 = p(pow == maxpow2); %periodo in cui il fenomeno raggiunge la seconda potenza maggiore
 
+%Ricostruzione segnale mediante DC + 2 componenti maggiori
+a = zeros(size(Y));
+a(1) = Y(1);
+a(ind1) = Y(ind1);
+a(ind2) = Y(ind2);
+xn = ifft(a);
+figure('Name','Ricostruzione segnale I');
+plot(t,xn)
+xlim([0 216]);
+xlabel('Mesi');
+ylabel('CO2');
+
+% Ricostruzione segnale mediante DC + 4 componenti maggiori
+a(ind3) = Y(ind3);
+a(ind4) = Y(ind4);
+xn = ifft(a);
+figure('Name','Ricostruzione segnale II');
+plot(t,xn)
+xlim([0 216]);
+xlabel('Mesi');
+ylabel('CO2');
+ 
+ 
