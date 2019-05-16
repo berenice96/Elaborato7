@@ -28,15 +28,15 @@ ylabel('Potenza');
 sorted_pow = sort(pow,'descend');
 maxpow = sorted_pow(1); %calcolo della massima potenza
 maxpow2 = sorted_pow(2); %calcolo della seconda potenza maggiore
-maxpow3 = sorted_pow(3);
-maxpow4 = sorted_pow(4);
+maxpow3 = sorted_pow(3); %calcolo della terza potenza maggiore
+maxpow4 = sorted_pow(4); %calcolo della quarta potenza maggiore
 f(pow == maxpow) %frequenza alla quale la potenza è massima
 f(pow == maxpow2) %frequenza corrispondente alla seconda potenza maggiore
 
-ind1 = find(Y==Y(pow==maxpow));
-ind2 = find(Y==Y(pow==maxpow2));
-ind3 = find(Y==Y(pow==maxpow3));
-ind4 = find(Y==Y(pow==maxpow4));
+ind1 = find(Y==Y(pow==maxpow)); %indice corrispondente alla massima potenza
+ind2 = find(Y==Y(pow==maxpow2)); %indice corrispondente alla seconda potenza maggiore
+ind3 = find(Y==Y(pow==maxpow3)); %indice corrispondente alla terza potenza maggiore
+ind4 = find(Y==Y(pow==maxpow4)); %indice corrispondente alla quarta potenza maggiore
 
 %si visualizza la potenza in funzione del periodo
 figure('Name','Periodogramma');
@@ -61,11 +61,15 @@ xlabel('Mesi');
 ylabel('CO2');
 
 % Ricostruzione segnale mediante DC + 4 componenti maggiori
-a(ind3) = Y(ind3);
-a(ind4) = Y(ind4);
-xn = ifft(a);
+b = zeros(size(Y));
+b(1) = Y(1);
+b(ind1) = Y(ind1);
+b(ind2) = Y(ind2);
+b(ind3) = Y(ind3);
+b(ind4) = Y(ind4);
+xr = ifft(b);
 figure('Name','Ricostruzione segnale II');
-plot(t,xn)
+plot(t,xr)
 xlim([0 216]);
 xlabel('Mesi');
 ylabel('CO2');
