@@ -15,9 +15,9 @@ N = length(y);
 Y = fft(y);
 %Y1 = Y;
 %Y1(1) = [];
-f = (2:floor(N/2))*Fs/N; %segnale reale, per simmetria si opera con le frequenze da 1 a N/2
+f = (1:floor(N/2))*Fs/N; %segnale reale, per simmetria si opera con le frequenze da 1 a N/2
 %pow = (2*abs(Y1(1:floor(N/2))/N)).^2;
-pow = (2*abs(Y(2:floor(N/2))/N)).^2;
+pow = (2*abs(Y(2:floor(N/2+1))/N)).^2;
 
 %Periodogramma
 figure('Name','Periodogramma');
