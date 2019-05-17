@@ -30,8 +30,8 @@ maxpow = sorted_pow(1); %calcolo della massima potenza
 maxpow2 = sorted_pow(2); %calcolo della seconda potenza maggiore
 maxpow3 = sorted_pow(3); %calcolo della terza potenza maggiore
 maxpow4 = sorted_pow(4); %calcolo della quarta potenza maggiore
-f(pow == maxpow) %frequenza alla quale la potenza è massima
-f(pow == maxpow2) %frequenza corrispondente alla seconda potenza maggiore
+freq1 = f(pow == maxpow) %frequenza alla quale la potenza è massima
+freq2 = f(pow == maxpow2) %frequenza corrispondente alla seconda potenza maggiore
 
 ind1 = find(Y==Y(pow==maxpow)); %indice corrispondente alla massima potenza
 ind2 = find(Y==Y(pow==maxpow2)); %indice corrispondente alla seconda potenza maggiore
